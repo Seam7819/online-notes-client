@@ -6,12 +6,26 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Notes from './Notes.jsx';
+import UpdateNote from './UpdateNote.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    children: [
+      {
+        path: '/notes',
+        element: <Notes></Notes>,
+      },
+
+    ]
   },
+  {
+    path: '/notes/:id',
+    element: <UpdateNote></UpdateNote>,
+    loader: ({params}) => fetch(`http://localhost:5000/notes/${params.id}`)
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(
